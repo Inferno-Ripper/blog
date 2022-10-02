@@ -2,17 +2,19 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 
 const Home: NextPage = () => {
 	return (
-		<div className='  min-w-screen h-full min-h-screen w-full dark:bg-custom-dark-full'>
+		<div className='w-full h-full min-h-screen min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
-				<title>Create Next App</title>
-				<link rel='icon' href='/favicon.ico' />
+				<title>Blog</title>
+				<link rel='icon' href='/assets/images/blog-logo.svg' />
 			</Head>
 
-			<h1>hi</h1>
-			<Link href='home'>home</Link>
+			<Sidebar />
+			<Header />
 		</div>
 	);
 };

@@ -6,11 +6,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "framer-motion": "^7.5.1",
     "next": "latest",
     "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.14",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-icons": "^4.4.0",
     "tailwind-scrollbar": "^2.0.1"
   },
   "devDependencies": {
