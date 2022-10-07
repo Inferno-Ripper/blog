@@ -13,12 +13,12 @@ const SidebarItem = ({
 		<div
 			className={`${
 				active ? 'text-blue-500' : ''
-			} group flex h-10 w-full cursor-pointer items-center transition-all duration-300 ease-in-out`}
+			} group  flex h-10 w-full cursor-pointer items-center transition-all duration-300 ease-in-out`}
 		>
 			<div
 				className={`${
 					active ? '' : 'group-hover:text-blue-600'
-				} ml-[30%] text-3xl transition-all  duration-300  ease-in-out group-hover:text-4xl  `}
+				} z-50 ml-[30%] text-3xl  ease-in-out group-hover:text-4xl  `}
 			>
 				{icon}
 			</div>

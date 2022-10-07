@@ -24,6 +24,14 @@ export default {
 			to: { type: 'author' },
 		},
 		{
+			name: 'mainImage',
+			title: 'Main image',
+			type: 'image',
+			options: {
+				hotspot: true,
+			},
+		},
+		{
 			name: 'imagesGallery',
 			title: 'Images gallery',
 			type: 'array',
@@ -43,6 +51,15 @@ export default {
 			title: 'Categories',
 			type: 'array',
 			of: [{ type: 'reference', to: { type: 'category' } }],
+		},
+		{
+			name: 'description',
+			title: 'Description',
+			type: 'string',
+			validation: (Rule) =>
+				Rule.max(50).warning(
+					`The description shouldn't be more than 50 characters.`
+				),
 		},
 		{
 			name: 'body',

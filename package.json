@@ -6,8 +6,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@sanity/client": "^3.4.1",
+    "@sanity/image-url": "^1.0.1",
+    "daisyui": "^2.31.0",
     "framer-motion": "^7.5.1",
+    "moment": "^2.29.4",
     "next": "latest",
+    "next-sanity": "^0.8.4",
     "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.14",
     "react": "18.1.0",

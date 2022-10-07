@@ -13,21 +13,13 @@ const Header: any = () => {
 	if (!mounted) return;
 
 	return (
-		<div className='fixed flex items-center justify-between w-screen h-16 gap-16 px-4 border-b border-custom-white-border bg-custom-white-light dark:border-custom-dark-border dark:bg-custom-dark-light'>
+		<div className='fixed top-0 left-0 z-50 flex items-center justify-between w-screen h-16 gap-16 px-4 border-b border-custom-white-border bg-custom-white-light dark:border-custom-dark-border dark:bg-custom-dark-light'>
 			<Link href='/home'>
-				{theme === 'dark' ? (
-					<img
-						src='/assets/images/blog-logo-white.svg'
-						alt=''
-						className='object-contain w-20 cursor-pointer'
-					/>
-				) : (
-					<img
-						src='/assets/images/blog-logo.svg'
-						alt=''
-						className='object-contain w-20 cursor-pointer'
-					/>
-				)}
+				<img
+					src='/assets/images/blog-logo-blue.svg'
+					alt=''
+					className='object-contain w-20 cursor-pointer'
+				/>
 			</Link>
 
 			<div className='flex items-center gap-5 group '>
