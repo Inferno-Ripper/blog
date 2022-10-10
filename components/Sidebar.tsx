@@ -25,7 +25,7 @@ const Sidebar: any = () => {
 	if (!isMounted) return;
 
 	return (
-		<div className='fixed top-0 left-0 z-50 flex flex-col justify-center w-16 h-screen gap-16 border-r border-custom-white-border bg-custom-white-light dark:border-custom-dark-border dark:bg-custom-dark-light'>
+		<div className='custom-background-color-and-border fixed top-0 left-0 z-50 flex h-screen w-16 flex-col justify-center gap-16 border-r'>
 			<Link href='/'>
 				<div>
 					<SidebarItem

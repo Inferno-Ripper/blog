@@ -1,19 +1,25 @@
 import type { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import AuthorInfo from '../components/AuthorInfo';
 import Banner from '../components/Banner';
 import Header from '../components/Header';
 import Post from '../components/Post';
 import Sidebar from '../components/Sidebar';
 import { sanityClient } from '../sanity';
-import { IFeaturedPost, IPost } from '../typing';
+import { IAuthor, IFeaturedPost, IPost } from '../typing';
 
 interface IProps {
 	featuredPostsSanity: [IFeaturedPost];
 	allPostSanity: [IPost];
+	allAuthorsSanity: [IAuthor];
 }
 
-const Home: NextPage<IProps> = ({ featuredPostsSanity, allPostSanity }) => {
+const Home: NextPage<IProps> = ({
+	featuredPostsSanity,
+	allPostSanity,
+	allAuthorsSanity,
+}) => {
 	return (
 		<div className='w-full h-full min-h-screen overflow-x-hidden overflow-y-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
@@ -31,11 +37,15 @@ const Home: NextPage<IProps> = ({ featuredPostsSanity, allPostSanity }) => {
 						<Banner featuredPostsSanity={featuredPostsSanity} />
 					)}
 
-					{/* all posts */}
-					<div className='flex flex-col gap-6'>
-						{allPostSanity.map((postData) => (
-							<Post key={postData._id} postData={postData} />
-						))}
+					<div className='flex justify-between'>
+						{/* all posts */}
+						<div className='flex flex-col gap-6'>
+							{allPostSanity.map((postData) => (
+								<Post key={postData._id} postData={postData} />
+							))}
+						</div>
+
+						<AuthorInfo allAuthorsSanity={allAuthorsSanity} />
 					</div>
 				</div>
 			</div>
@@ -47,40 +57,51 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
 	// getting featured posts and all posts from sanity io
-	const postsQuery = `{
-		"featuredPosts": *[_type == "featured-post"] | order(_createdAt desc) {
-			featuredPost-> {
-			author-> {bio, image, name},
-			body,
-			categories[]->{_id, title, description},
-			imagesGallery,
-			mainImage,
-			slug{current},
-			title,
-			description,
-		 _createdAt,
-		 _updatedAt,
-		 _id
-		 }
-		},
-		"allPosts": *[_type == "post"] | order(_createdAt desc) {
-			author-> {bio, image, name},
-			body,
-			categories[]->{_id, title, description},
-			imagesGallery,
-			mainImage,
-			slug{current},
-			title,
-			description,
-		 _createdAt,
-		 _updatedAt,
-		 _id
-		 }
-	}`;
+	const postsQuery = `
+		{
+			"featuredPosts": *[_type == "featured-post"] | order(_createdAt desc) {
+				featuredPost-> {
+				author-> {"bio": bio[0].children[0].text, image, name},
+				body,
+				categories[]->{_id, title, description},
+				imagesGallery,
+				mainImage,
+				slug{current},
+				title,
+				description,
+			_createdAt,
+			_updatedAt,
+			_id
+			}
+			},
+		
+			"allPosts": *[_type == "post"] | order(_createdAt desc) {
+				author-> {"bio": bio[0].children[0].text, image, name},
+				body,
+				categories[]->{_id, title, description},
+				imagesGallery,
+				mainImage,
+				slug{current},
+				title,
+				description,
+			_createdAt,
+			_updatedAt,
+			_id
+			},
+		
+			"allAuthors": *[_type == "author"] | order(_createdAt asc) {
+				_id,
+				name,
+				image,
+				bio
+			}
+		}
+	`;
 
 	interface IPostsSanity {
 		featuredPosts: [{ featuredPost: IFeaturedPost }];
 		allPosts: IPost[];
+		allAuthors: IAuthor[];
 	}
 
 	const postsSanity: IPostsSanity = await sanityClient.fetch(postsQuery);
@@ -96,13 +117,17 @@ export const getStaticProps: GetStaticProps = async () => {
 		}
 	);
 
-	// asigning the all posts from sanity io to a variable allPostSanity
+	// asigning all of the posts from sanity io to a variable allPostSanity
 	const allPostSanity: IPost[] = postsSanity.allPosts;
+
+	// asigning all of authors data from sanity io to a variable allauthorsSanity
+	const allAuthorsSanity: IAuthor[] = postsSanity.allAuthors;
 
 	return {
 		props: {
 			featuredPostsSanity,
 			allPostSanity,
+			allAuthorsSanity,
 		},
 
 		revalidate: 60,

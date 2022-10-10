@@ -38,7 +38,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 	return (
 		<div className='relative z-10 w-full text-white transition-all duration-500 bg-transparent bg-center bg-no-repeat bg-cover rounded-lg group h-80 '>
 			<div
-				className='absolute inset-0 z-0 transition-all duration-500 bg-center bg-no-repeat bg-cover border rounded-lg brightness-80 border-custom-white-border group-hover:brightness-50 dark:border-custom-dark-border'
+				className='absolute inset-0 z-0 transition-all duration-500 bg-black bg-center bg-no-repeat bg-cover border rounded-lg brightness-80 border-custom-white-border group-hover:brightness-50 dark:border-custom-dark-border'
 				style={{
 					backgroundImage: `url(${urlFor(
 						featuredPosts[selected]?.mainImage
@@ -81,7 +81,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 				<BiDetail />
 			</p>
 
-			<div className='absolute left-11 top-1 z-10 hidden h-[90%] w-80 flex-col justify-between gap-2 truncate rounded-lg border border-custom-white-border  bg-custom-white-light p-3 text-black duration-300 group-hover:opacity-100 peer-hover:flex hover:flex dark:border-custom-dark-border  dark:bg-custom-dark-light dark:text-white sm:left-20 sm:top-2 sm:flex sm:w-96 sm:opacity-80 lg:h-[95%] '>
+			<div className='custom-background-color-and-border absolute left-11 top-1 z-10 hidden h-[90%] w-80 flex-col justify-between gap-2 truncate rounded-lg border p-3 duration-300 group-hover:opacity-100 peer-hover:flex hover:flex   sm:left-20 sm:top-2 sm:flex sm:w-96 sm:opacity-80 lg:h-[95%] '>
 				<div className='flex justify-between '>
 					<div className='flex items-center gap-2'>
 						{/* author's image */}

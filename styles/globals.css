@@ -23,3 +23,9 @@
 	margin-right: -10px;
 	opacity: 1;
 }
+
+@layer components {
+	.custom-background-color-and-border {
+		@apply text-black border border-custom-white-border bg-custom-white-light dark:border-custom-dark-border dark:bg-custom-dark-light dark:text-white;
+	}
+}

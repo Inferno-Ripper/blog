@@ -12,7 +12,7 @@ interface IProps {
 
 const Post = ({ postData }: IProps) => {
 	return (
-		<div className='group  flex w-96 flex-col gap-2 overflow-hidden rounded-lg border border-custom-white-border bg-custom-white-light text-black dark:border-custom-dark-border dark:bg-custom-dark-light  dark:text-white lg:h-60 lg:w-[850px] lg:flex-row'>
+		<div className='custom-background-color-and-border  group flex w-96 flex-col gap-2 overflow-hidden rounded-lg border lg:h-60 lg:w-[850px] lg:flex-row'>
 			{/* post image */}
 
 			<Link href={postData?.slug?.current!}>
