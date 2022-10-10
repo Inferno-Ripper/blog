@@ -22,7 +22,7 @@ const SidebarItem = ({
 			>
 				{icon}
 			</div>
-			<p className='px-6 py-2 ml-2 text-xl font-semibold transition-all duration-300 ease-in-out border border-l-0 opacity-0 whitespace-nowrap rounded-br-md rounded-tr-md border-custom-white-border bg-custom-white-light group-hover:flex group-hover:opacity-100 dark:border-custom-dark-border dark:bg-custom-dark-light'>
+			<p className='hidden px-6 py-2 ml-2 text-xl font-semibold transition-all duration-300 ease-in-out border border-l-0 opacity-0 whitespace-nowrap rounded-br-md rounded-tr-md border-custom-white-border bg-custom-white-light group-hover:flex group-hover:opacity-100 dark:border-custom-dark-border dark:bg-custom-dark-light'>
 				{text}
 			</p>
 		</div>

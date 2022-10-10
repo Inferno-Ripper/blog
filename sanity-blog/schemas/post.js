@@ -7,6 +7,7 @@ export default {
 			name: 'title',
 			title: 'Title',
 			type: 'string',
+			validation: (Rule) => Rule.required().min(10).max(80),
 		},
 		{
 			name: 'slug',
@@ -16,12 +17,14 @@ export default {
 				source: 'title',
 				maxLength: 96,
 			},
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'author',
 			title: 'Author',
 			type: 'reference',
 			to: { type: 'author' },
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'mainImage',
@@ -30,6 +33,7 @@ export default {
 			options: {
 				hotspot: true,
 			},
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'imagesGallery',
@@ -51,20 +55,19 @@ export default {
 			title: 'Categories',
 			type: 'array',
 			of: [{ type: 'reference', to: { type: 'category' } }],
+			validation: (Rule) => Rule.required().min(1),
 		},
 		{
 			name: 'description',
 			title: 'Description',
 			type: 'string',
-			validation: (Rule) =>
-				Rule.max(50).warning(
-					`The description shouldn't be more than 50 characters.`
-				),
+			validation: (Rule) => Rule.required().min(20).max(160),
 		},
 		{
 			name: 'body',
 			title: 'Body',
 			type: 'blockContent',
+			validation: (Rule) => Rule.required(),
 		},
 	],
 

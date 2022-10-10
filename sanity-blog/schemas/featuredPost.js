@@ -8,6 +8,7 @@ export default {
 			title: 'featured post',
 			type: 'reference',
 			to: { type: 'post' },
+			validation: (Rule) => Rule.required(),
 		},
 	],
 

@@ -6,6 +6,7 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import { BiChevronRight, BiDetail } from 'react-icons/bi';
 import moment from 'moment';
 import Link from 'next/link';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
 	featuredPostsSanity: [IFeaturedPost];
@@ -34,10 +35,8 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 		}
 	};
 
-	console.log(featuredPosts[selected].slug?.current);
-
 	return (
-		<div className='relative z-10 w-full m-20 mr-3 text-white transition-all duration-500 bg-transparent bg-center bg-no-repeat bg-cover rounded-lg group h-80 '>
+		<div className='relative z-10 w-full text-white transition-all duration-500 bg-transparent bg-center bg-no-repeat bg-cover rounded-lg group h-80 '>
 			<div
 				className='absolute inset-0 z-0 transition-all duration-500 bg-center bg-no-repeat bg-cover border rounded-lg brightness-80 border-custom-white-border group-hover:brightness-50 dark:border-custom-dark-border'
 				style={{
@@ -82,7 +81,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 				<BiDetail />
 			</p>
 
-			<div className='absolute left-11 top-1 z-10 hidden h-[90%] w-80 flex-col justify-between gap-2 truncate rounded-lg  border border-custom-white-border bg-custom-white-light p-4 text-black  duration-300 group-hover:opacity-100 peer-hover:flex hover:flex  dark:border-custom-dark-border dark:bg-custom-dark-light dark:text-white sm:left-20 sm:top-2 sm:flex sm:w-96 sm:opacity-80'>
+			<div className='absolute left-11 top-1 z-10 hidden h-[90%] w-80 flex-col justify-between gap-2 truncate rounded-lg border border-custom-white-border  bg-custom-white-light p-3 text-black duration-300 group-hover:opacity-100 peer-hover:flex hover:flex dark:border-custom-dark-border  dark:bg-custom-dark-light dark:text-white sm:left-20 sm:top-2 sm:flex sm:w-96 sm:opacity-80 lg:h-[95%] '>
 				<div className='flex justify-between '>
 					<div className='flex items-center gap-2'>
 						{/* author's image */}
@@ -106,29 +105,33 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 				</div>
 
 				{/* post title */}
-				<h1 className='w-full px-2 text-xl font-semibold break-words truncate whitespace-normal max-h-16 sm:text-2xl'>
-					{featuredPosts[selected]?.title}
-				</h1>
+				<Link href={featuredPosts[selected]?.slug?.current!}>
+					<h1 className='w-full px-2 text-xl font-semibold truncate cursor-pointer sm:text-2xl'>
+						{featuredPosts[selected]?.title}
+					</h1>
+				</Link>
 
 				{/* post description */}
-				<p className='flex-1 truncate whitespace-normal break-words pl-2 text-sm sm:text-[16px] '>
-					{featuredPosts[selected]?.description}
-				</p>
+				<Link href={featuredPosts[selected]?.slug?.current!}>
+					<p className='flex min-h-[100px] cursor-pointer truncate whitespace-normal pb-6 pl-2 text-sm  sm:text-[16px]'>
+						{featuredPosts[selected]?.description}
+					</p>
+				</Link>
 
 				{/* post categories */}
 				<div
 					className={`${
-						featuredPosts[selected]?.categories?.length! > 2
-							? 'justify-around'
-							: 'gap-6'
-					} flex pt-2 sm:pt-3`}
+						featuredPosts[selected]?.categories?.length! > 1
+							? 'justify-center'
+							: ''
+					} flex flex-wrap items-center  gap-2 pt-2  sm:pt-3`}
 				>
 					{featuredPosts[selected].categories
-						?.slice(0, 3)
+						?.slice(0, 4)
 						?.map(({ _id, title }) => (
 							<p
-								key={_id}
-								className='px-3 py-1 font-medium text-white transition-all duration-300 bg-gray-700 cursor-pointer rounded-xl hover:bg-gray-800 sm:px-4'
+								key={uuidv4()}
+								className='cursor-pointer rounded-lg bg-gray-700 px-4 py-2 text-[10px] font-medium text-white transition-all duration-300 hover:bg-gray-800 sm:px-4'
 							>
 								{title}
 							</p>
