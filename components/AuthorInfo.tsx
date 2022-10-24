@@ -25,8 +25,6 @@ const AuthorInfo = ({ allAuthorsSanity }: IProps) => {
 		setSelectedAuthor(changeAuthor);
 	}, [changeSelectedAuthor]);
 
-	console.log(selectedAuthor);
-
 	return (
 		<div className='hidden p-4 rounded-lg custom-background-color-and-border h-fit w-72 2xl:block '>
 			<div className='relative space-y-6 '>
@@ -58,10 +56,12 @@ const AuthorInfo = ({ allAuthorsSanity }: IProps) => {
 					/>
 
 					{/* author name */}
-					<h1 className='text-xl font-semibold '>{selectedAuthor?.name}</h1>
+					<h1 className='pt-2 pl-1 text-xl font-semibold cursor-pointer'>
+						{selectedAuthor?.name}
+					</h1>
 
 					{/* author bio */}
-					<p className='text-lg '>{selectedAuthor?.bio}</p>
+					<p className='pl-1 text-lg'>{selectedAuthor?.bio}</p>
 				</div>
 			</div>
 		</div>

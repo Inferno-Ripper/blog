@@ -24,7 +24,7 @@ const Home: NextPage<IProps> = ({
 		<div className='w-full h-full min-h-screen overflow-x-hidden overflow-y-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>Blog...</title>
-				<link rel='icon' href='/assets/images/blog-logo.svg' />
+				<link rel='icon' href='/assets/images/b.svg' />
 			</Head>
 
 			<div className='flex w-full h-full'>

@@ -49,14 +49,14 @@ const Post = ({ postData }: IProps) => {
 
 				{/* post title */}
 				<Link href={postData?.slug?.current!}>
-					<h1 className='w-full truncate  break-words text-xl font-semibold lg:w-[500px]'>
+					<h1 className='w-full cursor-pointer  truncate break-words text-xl font-semibold lg:w-[500px]'>
 						{postData?.title}
 					</h1>
 				</Link>
 
 				{/* post description */}
 				<Link href={postData?.slug?.current!}>
-					<p className='h-20 w-full truncate whitespace-normal break-words text-sm   lg:w-[500px]'>
+					<p className='h-20 w-full cursor-pointer truncate whitespace-normal break-words  text-sm lg:w-[500px]'>
 						{postData?.description?.trim()}
 					</p>
 				</Link>

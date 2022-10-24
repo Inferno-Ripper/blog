@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SidebarItem from './SidebarItem';
-import { AiFillHome } from 'react-icons/ai';
+import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import { BsBookmark } from 'react-icons/bs';
 import { BsSun } from 'react-icons/bs';
 import { BsMoon } from 'react-icons/bs';
@@ -25,14 +25,14 @@ const Sidebar: any = () => {
 	if (!isMounted) return;
 
 	return (
-		<div className='custom-background-color-and-border fixed top-0 left-0 z-50 flex h-screen w-16 flex-col justify-center gap-16 border-r'>
+		<div className='custom-background-color-and-border fixed top-0 left-0 z-40 flex h-screen w-16 flex-col justify-center gap-16 border-r'>
 			<Link href='/'>
 				<div>
-					<SidebarItem
-						text='Home'
-						icon={<AiFillHome />}
-						active={router.pathname === '/' ? true : false}
-					/>
+					{router.pathname === '/' ? (
+						<SidebarItem text='Home' icon={<AiFillHome />} active={true} />
+					) : (
+						<SidebarItem text='Home' icon={<AiOutlineHome />} active={false} />
+					)}
 				</div>
 			</Link>
 
