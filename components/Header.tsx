@@ -14,8 +14,6 @@ const Header: any = () => {
 
 	if (!mounted) return;
 
-	console.log(user);
-
 	return (
 		<div className='custom-background-color-and-border fixed top-0 left-0 z-50 flex h-16 w-screen items-center justify-between gap-16 border-b px-4 pr-6'>
 			<Link href='/'>

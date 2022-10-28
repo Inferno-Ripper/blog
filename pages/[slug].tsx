@@ -5,17 +5,23 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { sanityClient, SanityImage, urlFor } from '../sanity';
-import { IPost } from '../typing';
+import { IPost, IComment } from '../typing';
 import { PortableText } from '@portabletext/react';
 import { useSession, signIn } from 'next-auth/react';
+import Lottie from 'react-lottie';
+import taskCompleted from '../task-completed.json';
 
 const Post = (post: IPost) => {
 	const [newComment, setNewComment] = useState('');
+	const [commentSent, setCommentSent] = useState(false);
 	const [displayGalleryImage, setDisplayGalleryImage] = useState(
 		post?.imagesGallery && post?.imagesGallery[0]
 	);
+
 	const { data: session } = useSession();
 	const user = session?.user;
+
+	const comments: IComment[] | undefined = post?.comments;
 
 	const portableTextComponents = {
 		block: {
@@ -73,9 +79,13 @@ const Post = (post: IPost) => {
 	const postComment = (e: any) => {
 		e.preventDefault();
 
+		if (!newComment) return;
+
 		const data = {
-			comment: newComment,
 			postId: post?._id,
+			name: user?.name,
+			image: user?.image,
+			comment: newComment,
 		};
 
 		fetch('api/addComment', {
@@ -84,6 +94,16 @@ const Post = (post: IPost) => {
 		});
 
 		setNewComment('');
+		setCommentSent(true);
+	};
+
+	const defaultOptions = {
+		loop: false,
+		autoplay: true,
+		animationData: taskCompleted,
+		rendererSettings: {
+			preserveAspectRatio: 'xMidYMid slice',
+		},
 	};
 
 	return (
@@ -98,7 +118,7 @@ const Post = (post: IPost) => {
 				<Sidebar />
 
 				<img
-					src={urlFor(post.mainImage).url()}
+					src={urlFor(post.mainImage)?.url()}
 					alt=''
 					className='mt-16 ml-16 h-52 w-full cursor-pointer bg-transparent object-cover transition-all duration-500 hover:h-96'
 				/>
@@ -110,12 +130,12 @@ const Post = (post: IPost) => {
 					<h1 className='text-4xl font-semibold '>{post?.title}</h1>
 
 					{/* post description */}
-					<h3 className='text-lg'>{post.description}</h3>
+					<h3 className='text-lg'>{post?.description}</h3>
 
 					<div className='flex items-center gap-2'>
 						{/* author image */}
 						<img
-							src={urlFor(post.author?.image).url()}
+							src={urlFor(post?.author?.image)?.url()}
 							alt=''
 							className='h-12 w-12 rounded-full'
 						/>
@@ -124,19 +144,19 @@ const Post = (post: IPost) => {
 						<div>
 							<p>
 								Blog Posted By{' '}
-								<span className='font-semibold'>{post.author?.name}</span> On{' '}
-								{moment(post._createdAt).format('MMMM Do YYYY, h:mm a')}
+								<span className='font-semibold'>{post?.author?.name}</span> On{' '}
+								{moment(post?._createdAt).format('MMMM Do YYYY, h:mm a')}
 							</p>
 							<p className='text-xs'>
 								Last Updated On{' '}
-								{moment(post._updatedAt).format('MMMM Do YYYY, h:mm a')}
+								{moment(post?._updatedAt).format('MMMM Do YYYY, h:mm a')}
 							</p>
 						</div>
 					</div>
 
 					<div className='max-w-full space-y-10 '>
 						<PortableText
-							value={post.body}
+							value={post?.body}
 							components={portableTextComponents}
 						/>
 
@@ -168,6 +188,35 @@ const Post = (post: IPost) => {
 					</div>
 
 					{/* comment section*/}
+
+					{/* all comments */}
+					<h1 className='text-2xl font-semibold '>Comments</h1>
+
+					<div className='max-h-[500px] space-y-4 overflow-y-scroll pb-10 scrollbar-thin  scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-700'>
+						{comments?.map(({ name, image, _id, _createdAt, comment }) => (
+							<div
+								key={_id}
+								className='custom-background-color-and-border space-y-4 rounded-lg p-4'
+							>
+								<div className='relative flex items-center gap-4'>
+									{/* image */}
+									<img src={image} className='h-10 rounded-full ' alt='' />
+
+									{/* name */}
+									<h3 className='text-xl font-semibold'>{name}</h3>
+
+									<h4 className='absolute top-0 right-0 text-sm '>
+										{moment(_createdAt).format('MMMM Do YYYY, h:mm a')}
+									</h4>
+								</div>
+
+								{/* comment */}
+								<p>{comment}</p>
+							</div>
+						))}
+					</div>
+
+					{/* post new comment */}
 					{user ? (
 						<div className='flex flex-col gap-5'>
 							<div className='border-b border-custom-white-border pb-4 dark:border-custom-dark-border'>
@@ -179,34 +228,49 @@ const Post = (post: IPost) => {
 								</h1>
 							</div>
 
-							{/* comment */}
-							<form onClick={postComment} className='space-y-8'>
-								<div className='space-y-2'>
-									<h1 className='text-2xl font-semibold '>Comment</h1>
-									<textarea
-										value={newComment}
-										onChange={(e) => setNewComment(e.target.value)}
-										placeholder='Type Your Comment Here'
-										rows={8}
-										maxLength={1000}
-										className='w-full resize-none rounded-lg border-2 border-custom-white-border bg-transparent p-2 shadow-sm outline-none transition-all duration-300 scrollbar-none placeholder:text-zinc-600 focus:border-blue-500 dark:border-custom-dark-border dark:shadow-zinc-800 dark:placeholder:text-zinc-400 dark:focus:border-blue-500'
-									></textarea>
-								</div>
+							{/* post new form */}
+							{commentSent ? (
+								<>
+									<Lottie
+										height={300}
+										width={300}
+										speed={0.5}
+										options={defaultOptions}
+									/>
+									<h1 className='break-words  text-center'>
+										Your Comment Has Been Submitted Once It's Approved It Will
+										Be Post. Thank You
+									</h1>
+								</>
+							) : (
+								<form onSubmit={postComment} className='space-y-8'>
+									<div className='space-y-2'>
+										<h1 className='text-2xl font-semibold '>Comment</h1>
+										<textarea
+											value={newComment}
+											onChange={(e) => setNewComment(e.target.value)}
+											placeholder='Type Your Comment Here'
+											rows={8}
+											maxLength={1000}
+											className='w-full resize-none rounded-lg border-2 border-custom-white-border bg-transparent p-2 shadow-sm outline-none transition-all duration-300 scrollbar-none placeholder:text-zinc-600 focus:border-blue-500 dark:border-custom-dark-border dark:shadow-zinc-800 dark:placeholder:text-zinc-400 dark:focus:border-blue-500'
+										></textarea>
+									</div>
 
-								<button
-									disabled={newComment.length > 0 ? false : true}
-									type='submit'
-									className='w-full cursor-pointer rounded-lg bg-blue-600 py-2 text-lg font-semibold tracking-wide text-white transition-all duration-300 disabled:cursor-not-allowed disabled:bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-600'
-								>
-									Submit
-								</button>
-							</form>
+									<button
+										disabled={newComment.length > 0 ? false : true}
+										type='submit'
+										className='w-full cursor-pointer rounded-lg bg-blue-600 py-2 text-lg font-semibold tracking-wide text-white transition-all duration-300 disabled:cursor-not-allowed disabled:bg-blue-500 hover:bg-blue-700 '
+									>
+										Submit
+									</button>
+								</form>
+							)}
 						</div>
 					) : (
 						<div className='flex w-full justify-center  '>
 							<button
 								onClick={() => signIn()}
-								className='rounded-lg bg-white py-2 px-6 text-lg font-semibold tracking-wider text-black transition-all  duration-300 hover:scale-105 hover:bg-blue-500 hover:text-white'
+								className='l rounded-lg bg-blue-500 py-2 px-6 text-lg font-semibold tracking-wider   text-white transition-all duration-300 hover:scale-105 hover:bg-blue-600'
 							>
 								sign in to comment
 							</button>
@@ -251,19 +315,36 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const query = `
-    *[_type == "post" && slug.current == $slug][0]{
-      author-> {"bio": bio[0].children[0].text, image, name},
-      body,
-      categories[]->{_id, title, description},
-      imagesGallery,
-      mainImage,
-      slug{current},
-      title,
-      description,
-    _createdAt,
-    _updatedAt,
-    _id,
-    }
+	*[_type == "post" && slug.current == $slug][0] {
+		author-> {
+		 "bio": bio[0].children[0].text,
+		 image, 
+		 name
+		},
+		body,
+		categories[]->{
+		 _id,
+			title,
+			description
+		},
+		imagesGallery,
+		mainImage,
+		slug{
+			current
+		},
+		title,
+		description,
+	 _createdAt,
+	 _updatedAt,
+	 _id,
+	 "comments": *[_type == "comment" && post._ref == ^._id && approved == true] | order(_createdAt desc) {
+		name,
+		image,
+		comment,
+		_createdAt,
+		_id
+	 },
+	}
   `;
 
 	const post = await sanityClient.fetch(query, {
@@ -275,6 +356,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 			notFound: true,
 		};
 	}
+
 	return {
 		props: post,
 		revalidate: 60, // after 60 seconds it'll update the old cached version

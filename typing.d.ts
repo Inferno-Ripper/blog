@@ -24,6 +24,7 @@ export interface IPost {
 	_createdAt?: string;
 	_updatedAt?: string;
 	_id?: string;
+	comments?: IComment[];
 }
 
 export interface IAuthor {
@@ -38,4 +39,12 @@ export interface IImage {
 		asset: { ref: string; _type: string };
 	};
 	_type: string;
+}
+
+export interface IComment {
+	name?: string;
+	image?: string;
+	comment?: string;
+	_createdAt?: string;
+	_id?: string;
 }

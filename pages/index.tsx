@@ -8,6 +8,7 @@ import Post from '../components/Post';
 import Sidebar from '../components/Sidebar';
 import { sanityClient } from '../sanity';
 import { IAuthor, IFeaturedPost, IPost } from '../typing';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
 	featuredPostsSanity: [IFeaturedPost];
@@ -21,13 +22,13 @@ const Home: NextPage<IProps> = ({
 	allAuthorsSanity,
 }) => {
 	return (
-		<div className='w-full h-full min-h-screen overflow-x-hidden overflow-y-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
+		<div className='min-w-screen h-full min-h-screen w-full overflow-x-hidden overflow-y-hidden bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>Blog...</title>
 				<link rel='icon' href='/assets/images/b.svg' />
 			</Head>
 
-			<div className='flex w-full h-full'>
+			<div className='flex h-full w-full'>
 				<Sidebar />
 				<Header />
 
@@ -41,7 +42,7 @@ const Home: NextPage<IProps> = ({
 						{/* all posts */}
 						<div className='flex flex-col gap-6'>
 							{allPostSanity.map((postData) => (
-								<Post key={postData._id} postData={postData} />
+								<Post key={uuidv4()} postData={postData} />
 							))}
 						</div>
 
