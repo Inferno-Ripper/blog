@@ -12,6 +12,7 @@
 		"daisyui": "^2.31.0",
 		"moment": "^2.29.4",
 		"next": "latest",
+		"next-auth": "^4.15.0",
 		"next-sanity": "^0.8.4",
 		"next-sanity-image": "^4.1.0",
 		"next-themes": "^0.2.1",

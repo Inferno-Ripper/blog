@@ -7,7 +7,6 @@ export const config = {
 	dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 	projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 	apiVersion: '2021-08-11', // or today's date for latest
-
 	useCdn: process.env.NODE_ENV === 'production',
 };
 
@@ -27,7 +26,7 @@ export const SanityImage = ({ asset }) => {
 	return (
 		<img
 			{...imageProps}
-			className='object-contain w-full my-10 rounded-lg cursor-pointer '
+			className='my-10 w-full cursor-pointer rounded-lg object-contain '
 		/>
 	);
 };

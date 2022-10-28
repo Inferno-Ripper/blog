@@ -7,12 +7,15 @@ import Sidebar from '../components/Sidebar';
 import { sanityClient, SanityImage, urlFor } from '../sanity';
 import { IPost } from '../typing';
 import { PortableText } from '@portabletext/react';
-import Link from 'next/link';
+import { useSession, signIn } from 'next-auth/react';
 
 const Post = (post: IPost) => {
+	const [newComment, setNewComment] = useState('');
 	const [displayGalleryImage, setDisplayGalleryImage] = useState(
 		post?.imagesGallery && post?.imagesGallery[0]
 	);
+	const { data: session } = useSession();
+	const user = session?.user;
 
 	const portableTextComponents = {
 		block: {
@@ -45,7 +48,7 @@ const Post = (post: IPost) => {
 					<a
 						href={value.href}
 						rel={rel}
-						className='text-blue-600 cursor-pointer hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500'
+						className='cursor-pointer text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500'
 					>
 						{children}
 					</a>
@@ -56,7 +59,7 @@ const Post = (post: IPost) => {
 		listItem: {
 			// Ex. 1: customizing common list types
 			bullet: ({ children }: any) => (
-				<li className='ml-6 font-medium list-disc'>{children}</li>
+				<li className='ml-6 list-disc font-medium'>{children}</li>
 			),
 		},
 
@@ -67,8 +70,24 @@ const Post = (post: IPost) => {
 		},
 	};
 
+	const postComment = (e: any) => {
+		e.preventDefault();
+
+		const data = {
+			comment: newComment,
+			postId: post?._id,
+		};
+
+		fetch('api/addComment', {
+			method: 'POST',
+			body: JSON.stringify(data),
+		});
+
+		setNewComment('');
+	};
+
 	return (
-		<div className='min-h-screen space-y-2 overflow-x-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
+		<div className='min-w-screen min-h-screen space-y-2 overflow-x-hidden bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>{post.title}</title>
 				<link rel='icon' href='/assets/images/b.svg' />
@@ -81,12 +100,12 @@ const Post = (post: IPost) => {
 				<img
 					src={urlFor(post.mainImage).url()}
 					alt=''
-					className='object-cover w-full mt-16 ml-16 transition-all duration-500 bg-transparent cursor-pointer h-52 hover:h-96'
+					className='mt-16 ml-16 h-52 w-full cursor-pointer bg-transparent object-cover transition-all duration-500 hover:h-96'
 				/>
 			</div>
 
-			<div className='flex justify-center w-full min-h-screen ml-8 text-black dark:text-white'>
-				<div className='w-4/5 p-2 pb-10 space-y-4 break-all whitespace-normal md:w-1/2'>
+			<div className='ml-8 flex min-h-screen w-full justify-center text-black dark:text-white'>
+				<div className='w-4/5 space-y-4 whitespace-normal break-all p-2 pb-10 md:w-1/2'>
 					{/* post title */}
 					<h1 className='text-4xl font-semibold '>{post?.title}</h1>
 
@@ -98,7 +117,7 @@ const Post = (post: IPost) => {
 						<img
 							src={urlFor(post.author?.image).url()}
 							alt=''
-							className='w-12 h-12 rounded-full'
+							className='h-12 w-12 rounded-full'
 						/>
 
 						{/* post created at and updated at */}
@@ -123,24 +142,76 @@ const Post = (post: IPost) => {
 
 						{/* images gallery */}
 						<div className='space-y-4 '>
-							<img
-								src={urlFor(displayGalleryImage)?.url()}
-								alt=''
-								className='object-contain w-full rounded-lg cursor-pointer'
-							/>
+							{displayGalleryImage && (
+								<img
+									src={urlFor(displayGalleryImage)?.url()}
+									alt=''
+									className='w-full cursor-pointer rounded-lg object-contain'
+								/>
+							)}
 
-							<div className='flex gap-5 overflow-y-hidden rounded-lg cursor-pointer scrollbar-thin scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-700'>
+							<div className='flex cursor-pointer gap-5 overflow-y-hidden rounded-lg scrollbar-thin scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-700'>
 								{post.imagesGallery?.map((image) => (
 									<img
 										src={urlFor(image)?.url()}
 										alt=''
-										className='h-32 transition-all duration-500 rounded-lg hover:brightness-50'
-										onClick={() => setDisplayGalleryImage(image)}
+										className='h-32 rounded-lg transition-all duration-500 hover:brightness-50'
+										onMouseEnter={() => setDisplayGalleryImage(image)}
 									/>
 								))}
 							</div>
 						</div>
 					</div>
+
+					<div className='py-10 '>
+						<hr className='mx-20 rounded-md border-2 border-blue-500' />
+					</div>
+
+					{/* comment section*/}
+					{user ? (
+						<div className='flex flex-col gap-5'>
+							<div className='border-b border-custom-white-border pb-4 dark:border-custom-dark-border'>
+								<p className='text-md text-zinc-600 dark:text-zinc-400'>
+									Enjoyed This Article?
+								</p>
+								<h1 className='text-3xl font-semibold'>
+									Leave A Comment Below!
+								</h1>
+							</div>
+
+							{/* comment */}
+							<form onClick={postComment} className='space-y-8'>
+								<div className='space-y-2'>
+									<h1 className='text-2xl font-semibold '>Comment</h1>
+									<textarea
+										value={newComment}
+										onChange={(e) => setNewComment(e.target.value)}
+										placeholder='Type Your Comment Here'
+										rows={8}
+										maxLength={1000}
+										className='w-full resize-none rounded-lg border-2 border-custom-white-border bg-transparent p-2 shadow-sm outline-none transition-all duration-300 scrollbar-none placeholder:text-zinc-600 focus:border-blue-500 dark:border-custom-dark-border dark:shadow-zinc-800 dark:placeholder:text-zinc-400 dark:focus:border-blue-500'
+									></textarea>
+								</div>
+
+								<button
+									disabled={newComment.length > 0 ? false : true}
+									type='submit'
+									className='w-full cursor-pointer rounded-lg bg-blue-600 py-2 text-lg font-semibold tracking-wide text-white transition-all duration-300 disabled:cursor-not-allowed disabled:bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-600'
+								>
+									Submit
+								</button>
+							</form>
+						</div>
+					) : (
+						<div className='flex w-full justify-center  '>
+							<button
+								onClick={() => signIn()}
+								className='rounded-lg bg-white py-2 px-6 text-lg font-semibold tracking-wider text-black transition-all  duration-300 hover:scale-105 hover:bg-blue-500 hover:text-white'
+							>
+								sign in to comment
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
@@ -165,8 +236,6 @@ export const getStaticPaths = async () => {
 	}
 
 	const posts: IPostPaths[] = await sanityClient.fetch(query);
-
-	console.log(posts);
 
 	const paths = posts?.map((post: IPostPaths) => ({
 		params: {
