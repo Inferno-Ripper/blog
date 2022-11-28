@@ -131,7 +131,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 						?.map(({ _id, title }) => (
 							<p
 								key={uuidv4()}
-								className='cursor-pointer rounded-md bg-gray-700 px-2 py-1 text-[8px] font-medium text-white transition-all duration-300 hover:bg-gray-800 sm:px-4'
+								className='px-2 py-1 text-xs font-medium text-white transition-all duration-300 bg-gray-700 rounded-md cursor-pointer hover:bg-gray-800 sm:px-4'
 							>
 								{title}
 							</p>

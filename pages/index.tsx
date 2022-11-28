@@ -131,6 +131,6 @@ export const getStaticProps: GetStaticProps = async () => {
 			allAuthorsSanity,
 		},
 
-		revalidate: 60,
+		revalidate: 3600,
 	};
 };
