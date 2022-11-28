@@ -22,13 +22,13 @@ const Home: NextPage<IProps> = ({
 	allAuthorsSanity,
 }) => {
 	return (
-		<div className='min-w-screen h-full min-h-screen w-full overflow-x-hidden overflow-y-hidden bg-custom-white-dark dark:bg-custom-dark-full'>
+		<div className='w-full h-full min-h-screen overflow-x-hidden overflow-y-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>Blog...</title>
 				<link rel='icon' href='/assets/images/b.svg' />
 			</Head>
 
-			<div className='flex h-full w-full'>
+			<div className='flex w-full h-full'>
 				<Sidebar />
 				<Header />
 
@@ -40,7 +40,7 @@ const Home: NextPage<IProps> = ({
 
 					<div className='flex justify-between'>
 						{/* all posts */}
-						<div className='flex flex-col gap-6'>
+						<div className='flex flex-col items-center justify-center w-full gap-6 2xl:items-start'>
 							{allPostSanity.map((postData) => (
 								<Post key={uuidv4()} postData={postData} />
 							))}

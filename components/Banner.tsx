@@ -36,7 +36,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 	};
 
 	return (
-		<div className='relative z-10 w-full text-white transition-all duration-500 bg-transparent bg-center bg-no-repeat bg-cover rounded-lg group h-80 '>
+		<div className='group relative z-10 mx-auto h-60 w-[350px] rounded-lg bg-transparent bg-cover bg-center bg-no-repeat text-white transition-all duration-500 sm:h-80 sm:w-full '>
 			<div
 				className='absolute inset-0 z-0 transition-all duration-500 bg-black bg-center bg-no-repeat bg-cover border rounded-lg brightness-80 border-custom-white-border group-hover:brightness-50 dark:border-custom-dark-border'
 				style={{
@@ -81,7 +81,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 				<BiDetail />
 			</p>
 
-			<div className='custom-background-color-and-border absolute left-11 top-1 z-10 hidden h-[90%] w-80 flex-col justify-between gap-2 truncate rounded-lg border p-3 duration-300 group-hover:opacity-100 peer-hover:flex hover:flex   sm:left-20 sm:top-2 sm:flex sm:w-96 sm:opacity-80 lg:h-[95%] '>
+			<div className='custom-background-color-and-border absolute left-11 top-1 z-10 hidden h-[90%] w-72 flex-col justify-between gap-2 truncate rounded-lg border p-3 duration-300 group-hover:opacity-100 peer-hover:flex hover:flex sm:left-20   sm:top-2 sm:flex  sm:w-96 sm:opacity-80 lg:h-[95%] '>
 				<div className='flex justify-between '>
 					<div className='flex items-center gap-2'>
 						{/* author's image */}
@@ -113,7 +113,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 
 				{/* post description */}
 				<Link href={featuredPosts[selected]?.slug?.current!}>
-					<p className='flex min-h-[100px] cursor-pointer truncate whitespace-normal pb-6 pl-2 text-sm  sm:text-[16px]'>
+					<p className='flex min-h-[80px] cursor-pointer truncate whitespace-normal pb-6 pl-2 text-xs  sm:text-[16px]'>
 						{featuredPosts[selected]?.description}
 					</p>
 				</Link>
@@ -131,7 +131,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 						?.map(({ _id, title }) => (
 							<p
 								key={uuidv4()}
-								className='cursor-pointer rounded-lg bg-gray-700 px-4 py-2 text-[10px] font-medium text-white transition-all duration-300 hover:bg-gray-800 sm:px-4'
+								className='cursor-pointer rounded-md bg-gray-700 px-2 py-1 text-[8px] font-medium text-white transition-all duration-300 hover:bg-gray-800 sm:px-4'
 							>
 								{title}
 							</p>

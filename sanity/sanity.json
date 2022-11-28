@@ -1,0 +1,28 @@
+{
+	"root": true,
+	"project": {
+		"name": "sanity-blog"
+	},
+	"api": {
+		"projectId": "xconk8cb",
+		"dataset": "production"
+	},
+	"plugins": [
+		"@sanity/base",
+		"@sanity/default-layout",
+		"@sanity/default-login",
+		"@sanity/desk-tool",
+		"dark-mode"
+	],
+	"env": {
+		"development": {
+			"plugins": ["@sanity/vision"]
+		}
+	},
+	"parts": [
+		{
+			"name": "part:@sanity/base/schema",
+			"path": "./schemas/schema"
+		}
+	]
+}
