@@ -26,7 +26,8 @@ export const SanityImage = ({ asset }) => {
 	return (
 		<img
 			{...imageProps}
-			className='my-10 w-full cursor-pointer rounded-lg object-contain '
+			style={{ height: '500px', width: '100%' }}
+			className='object-contain my-10 rounded-lg cursor-pointer '
 		/>
 	);
 };

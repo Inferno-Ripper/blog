@@ -61,7 +61,7 @@ const AuthorInfo = ({ allAuthorsSanity }: IProps) => {
 					</h1>
 
 					{/* author bio */}
-					<p className='pl-1 text-lg'>{selectedAuthor?.bio}</p>
+					<p className='pl-1 '>{selectedAuthor?.bio}</p>
 				</div>
 			</div>
 		</div>

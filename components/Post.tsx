@@ -68,7 +68,7 @@ const Post = ({ postData }: IProps) => {
 					<img
 						src={urlFor(postData?.author?.image).url()}
 						alt=''
-						className='h-10 rounded-full'
+						className='object-cover w-12 h-12 rounded-full'
 					/>
 
 					<div className=''>

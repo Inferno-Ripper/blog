@@ -110,18 +110,20 @@ const Post = (post: IPost) => {
 		<div className='min-h-screen space-y-2 overflow-x-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>{post.title}</title>
-				<link rel='icon' href='/assets/images/b.svg' />
+				<link rel='icon' href='b.svg' />
 			</Head>
 
 			<div>
 				<Header />
 				<Sidebar />
 
-				<img
-					src={urlFor(post.mainImage)?.url()}
-					alt=''
-					className='object-cover w-full mt-16 ml-16 transition-all duration-500 bg-transparent cursor-pointer h-52 hover:h-96'
-				/>
+				<div className='flex items-center justify-center'>
+					<img
+						src={urlFor(post.mainImage)?.url()}
+						alt=''
+						className='mt-16 ml-16 h-52 w-full cursor-pointer bg-transparent object-cover transition-all duration-500 hover:mt-20 hover:h-[500px] hover:w-[500px] hover:rounded-lg '
+					/>
+				</div>
 			</div>
 
 			<div className='flex justify-center w-full min-h-screen ml-8 text-black dark:text-white'>
@@ -130,14 +132,14 @@ const Post = (post: IPost) => {
 					<h1 className='text-4xl font-semibold '>{post?.title}</h1>
 
 					{/* post description */}
-					<h3 className='text-lg'>{post?.description}</h3>
+					<h3 className='text-xl'>{post?.description}</h3>
 
 					<div className='flex items-center gap-2'>
 						{/* author image */}
 						<img
 							src={urlFor(post?.author?.image)?.url()}
 							alt=''
-							className='w-12 h-12 rounded-full'
+							className='object-cover w-12 h-12 rounded-full '
 						/>
 
 						{/* post created at and updated at */}
@@ -166,7 +168,7 @@ const Post = (post: IPost) => {
 								<img
 									src={urlFor(displayGalleryImage)?.url()}
 									alt=''
-									className='object-contain w-full rounded-lg cursor-pointer'
+									className='h-[500px] w-full cursor-pointer rounded-lg object-contain'
 								/>
 							)}
 
@@ -175,7 +177,7 @@ const Post = (post: IPost) => {
 									<img
 										src={urlFor(image)?.url()}
 										alt=''
-										className='h-32 transition-all duration-500 rounded-lg hover:brightness-50'
+										className='object-cover w-20 h-20 transition-all duration-500 rounded-lg hover:brightness-50'
 										onMouseEnter={() => setDisplayGalleryImage(image)}
 									/>
 								))}

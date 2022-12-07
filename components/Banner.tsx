@@ -86,7 +86,7 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 					<div className='flex items-center gap-2'>
 						{/* author's image */}
 						<img
-							className='w-8 h-8 rounded-full sm:h-10 sm:w-10'
+							className='object-cover w-8 h-8 rounded-full sm:h-10 sm:w-10'
 							src={urlFor(featuredPosts[selected]?.author?.image).url()}
 							alt=''
 						/>
@@ -122,9 +122,9 @@ const Banner = ({ featuredPostsSanity }: IProps) => {
 				<div
 					className={`${
 						featuredPosts[selected]?.categories?.length! > 1
-							? 'justify-center'
+							? 'justify-start'
 							: ''
-					} flex flex-wrap items-center  gap-2 pt-2  sm:pt-3`}
+					} flex flex-wrap items-center  gap-2 pl-2 pt-2  sm:pt-3`}
 				>
 					{featuredPosts[selected].categories
 						?.slice(0, 4)
