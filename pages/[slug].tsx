@@ -10,6 +10,7 @@ import { PortableText } from '@portabletext/react';
 import { useSession, signIn } from 'next-auth/react';
 import Lottie from 'react-lottie';
 import taskCompleted from '../task-completed.json';
+import { v4 as uuidv4 } from 'uuid';
 
 const Post = (post: IPost) => {
 	const [newComment, setNewComment] = useState('');
@@ -110,7 +111,7 @@ const Post = (post: IPost) => {
 		<div className='min-h-screen space-y-2 overflow-x-hidden min-w-screen bg-custom-white-dark dark:bg-custom-dark-full'>
 			<Head>
 				<title>{post.title}</title>
-				<link rel='icon' href='b.svg' />
+				<link rel='icon' href='assets/images/b.png' />
 			</Head>
 
 			<div>
@@ -179,6 +180,7 @@ const Post = (post: IPost) => {
 										alt=''
 										className='object-cover w-20 h-20 transition-all duration-500 rounded-lg hover:brightness-50'
 										onMouseEnter={() => setDisplayGalleryImage(image)}
+										key={uuidv4()}
 									/>
 								))}
 							</div>

@@ -18,9 +18,9 @@ const Header: any = () => {
 		<div className='fixed top-0 left-0 z-50 flex items-center justify-between w-screen h-16 gap-16 px-4 pr-6 border-b custom-background-color-and-border'>
 			<Link href='/'>
 				<img
-					src='blog-logo-blue.svg'
+					src='assets/images/blog-logo.png'
 					alt=''
-					className='object-contain w-20 cursor-pointer'
+					className='object-contain w-20 cursor-pointer '
 				/>
 			</Link>
 
